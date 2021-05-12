@@ -1,64 +1,76 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { Container, Row, Col } from 'react-bootstrap'
+import { useState, useEffect } from 'react'
+
 
 export default function Home() {
+
+  const [content, setContent] = useState("")
+  const [input, setInput] = useState("")
+  const [replaceTxt, setReplaceTxt] = useState([])
+
+  useEffect(() => {
+    function replaceString() {
+      let str = ""
+      if (replaceTxt[0] && content[0]) {
+        let arr = replaceTxt.split('<br />')
+        arr.map((key0) => {
+          let caps = key0.charAt(0).toUpperCase() + key0.slice(1)
+          str = str + content.replaceAll("xx", key0).replaceAll("Xx", caps) + "<br />"
+        })
+      }
+      setInput(str)
+    }
+    replaceString()
+  }, [content, replaceTxt])
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div>
+      <main>
+        <h2 className="text-center">
+          Hard Coding Tool
+        </h2>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <Container>
+          <Row>
+            <Col>
+              <textarea cols="60" rows="8" onChange={e => setContent(e.target.value)}></textarea>
+              <br />
+              <div dangerouslySetInnerHTML={{ __html: input }}></div>
+            </Col>
+            <Col>
+              <Row>
+                <Col>
+                  xx/Xx
+                  <br />
+                  <textarea rows="8" onChange={e => setReplaceTxt(e.target.value.replace(/\r\n|\r|\n/g, "<br />"))}></textarea>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+          <Row>
+            <Col>
+              <br />
+              <br />
+              <h3>Usage</h3>
+      const [xx,setXx] = useState()
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+      <br />
+              <br />
+              <h3>Snipp</h3>
+              <pre>{`arr.map((key0, index) => {\nreturn <option key={index} value={key0}>{key0}</option>\n})`}
+              </pre>
+              <br />
+              {`<div dangerouslySetInnerHTML={{ __html: input }}></div>`}
+            </Col>
+          </Row>
+        </Container>
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
+        Ting © 2021
       </footer>
     </div>
   )
