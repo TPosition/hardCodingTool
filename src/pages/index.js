@@ -37,7 +37,11 @@ export default function Home() {
             <Col>
               <textarea cols="60" rows="8" onChange={e => setContent(e.target.value)}></textarea>
               <br />
+              <p class="border-bottom border-3 border-dark">without HTML tag</p>
               <div dangerouslySetInnerHTML={{ __html: input }}></div>
+              <br />
+              <p class="border-bottom border-3 border-dark">with HTML tag</p>
+              <div>{input}</div>
             </Col>
             <Col>
               <Row>
